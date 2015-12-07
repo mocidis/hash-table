@@ -31,7 +31,11 @@ void ht_remove_item(hash_table_t* table_data, char* key) {
     SHOW_LOG(4, "Removed key %s\n", key);
 }
 
-void ht_list_item(hash_table_t* table_data) {
+unsigned ht_get_size(hash_table_t *table_data) {
+    return pj_hash_count(table_data->hash_table);
+}
+
+void ht_list_item(hash_table_t *table_data) {
     pj_hash_iterator_t it_buf,*it;
     unsigned count;
     int *ret;

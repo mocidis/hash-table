@@ -22,4 +22,5 @@ void ht_create(hash_table_t* table_data, unsigned size );
 void ht_add_item(hash_table_t* table_data, char *key, int *value);
 int ht_get_item(hash_table_t* table_data, char *key);
 void ht_remove_item(hash_table_t* table_data, char *key);
+unsigned ht_get_size(hash_table_t *table_data);
 #endif
