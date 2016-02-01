@@ -38,7 +38,6 @@ int main() {
     //ADD ITEM
     ht_add_item(&app_data, key, &value);
     //ht_add_item(&app_data, key2, &value2);
-    ht_add_item_v2(&app_data);
     //GET ITEM
     ret = ht_get_item(&app_data, f_key);
     SHOW_LOG(4, "Search for key: %s - Result: entry = %d\n", f_key, ret);
