@@ -12,22 +12,12 @@ void ht_create(hash_table_t *table_data, unsigned size) {
     EXIT_IF_TRUE(table_data->hash_table == NULL, "Error: pj_hash_create()\n");
 }
 
-void ht_add_item(hash_table_t* table_data, char *key, int *value) {
-    pj_hash_set(table_data->pool, table_data->hash_table, (void *)key, sizeof(key), 0, (void *)value);
-    SHOW_LOG(4, "Added key %s - value %d\n", key, *value);
+void ht_add_item(hash_table_t* table_data, void *key, void *value) {
+    pj_hash_set(table_data->pool, table_data->hash_table, key, strlen(key), 0, value);
+    //SHOW_LOG(4, "******************** Added key %s - value %s\n", (char *)key, (char *)value);
 }
-
-int ht_get_item(hash_table_t* table_data, char *key) {
-    int *ret;
-    ret = (int *)pj_hash_get(table_data->hash_table, (void *)key, sizeof(key), NULL);
-    if (ret == NULL)
-        return -1;
-    else
-        return *ret;
-}
-
-void ht_remove_item(hash_table_t* table_data, char* key) {
-    pj_hash_set(table_data->pool, table_data->hash_table, (void *)key, sizeof(key), 0, NULL);
+void ht_remove_item(hash_table_t* table_data, void* key) {
+    pj_hash_set(table_data->pool, table_data->hash_table, key, strlen(key), 0, NULL);
     SHOW_LOG(4, "Removed key %s\n", key);
 }
 
@@ -38,16 +28,21 @@ unsigned ht_get_size(hash_table_t *table_data) {
 void ht_list_item(hash_table_t *table_data) {
     pj_hash_iterator_t it_buf,*it;
     unsigned count;
-    int *ret;
+    void *ret;
 
     count = pj_hash_count(table_data->hash_table);
-    SHOW_LOG(4, "Total: %d %s\n", count, (count < 2)?"entry":"entries" );
+    SHOW_LOG(1, "Total: %d %s\n", count, (count < 2)?"entry":"entries" );
 
     it = pj_hash_first(table_data->hash_table, &it_buf);
     while (it) {
         ret = (int *)pj_hash_this(table_data->hash_table, it);
-        SHOW_LOG(4, "Entry: %d\n", *ret);
+        SHOW_LOG(1, "---Entry: %s\n", (char *)ret);
         it = pj_hash_next(table_data->hash_table, it);
     }   
 }
+
+void *ht_get_item(hash_table_t* table_data, void *key) {
+    return pj_hash_get(table_data->hash_table, key, strlen(key), NULL);
+}
+
 

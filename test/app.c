@@ -13,7 +13,7 @@ int main() {
     pj_hash_iterator_t it_buf,*it;
 
     //int key = 999, key2 = 666, f_key = 999 , f_key2 = 10;
-    char key[10] = "OIUC1", key2[10] = "OIUC2", f_key[10] = "OIUC1", f_key2[10] = "OIUC9";
+    char key[10] = "OIUC1", key2[10] = "OIUC2", f_key[10] = "aaaa", f_key2[10] = "OIUC9";
     int value = 11, value2 = 22, value3 = 33;
     unsigned *entry;
 
@@ -37,7 +37,8 @@ int main() {
 
     //ADD ITEM
     ht_add_item(&app_data, key, &value);
-    ht_add_item(&app_data, key2, &value2);
+    //ht_add_item(&app_data, key2, &value2);
+    ht_add_item_v2(&app_data);
     //GET ITEM
     ret = ht_get_item(&app_data, f_key);
     SHOW_LOG(4, "Search for key: %s - Result: entry = %d\n", f_key, ret);
