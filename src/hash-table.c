@@ -12,13 +12,13 @@ void ht_create(hash_table_t *table_data, unsigned size) {
     EXIT_IF_TRUE(table_data->hash_table == NULL, "Error: pj_hash_create()\n");
 }
 
-void ht_add_item(hash_table_t* table_data, void *key, void *value) {
-    pj_hash_set(table_data->pool, table_data->hash_table, key, strlen(key), 0, value);
+void ht_add_item(hash_table_t* table_data, char *key, int *value) {
+    pj_hash_set(table_data->pool, table_data->hash_table, key, strlen(key), 0, (void *) value);
     //SHOW_LOG(4, "******************** Added key %s - value %s\n", (char *)key, (char *)value);
 }
-void ht_remove_item(hash_table_t* table_data, void* key) {
+void ht_remove_item(hash_table_t* table_data, char* key) {
     pj_hash_set(table_data->pool, table_data->hash_table, key, strlen(key), 0, NULL);
-    SHOW_LOG(4, "Removed key %s\n", key);
+    SHOW_LOG(4, "Removed item %s\n", key);
 }
 
 unsigned ht_get_size(hash_table_t *table_data) {
@@ -41,8 +41,10 @@ void ht_list_item(hash_table_t *table_data) {
     }   
 }
 
-void *ht_get_item(hash_table_t* table_data, void *key) {
-    return pj_hash_get(table_data->hash_table, key, strlen(key), NULL);
+int *ht_get_item(hash_table_t* table_data, char *key) {
+    int *p; 
+    p = (int *) pj_hash_get(table_data->hash_table, (void *)key, strlen(key), NULL);
+    return p;
 }
 
 
